@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:alpine
+    restart: always
+    environment:
+       POSTGRES_PASSWORD: admin
+       POSTGRES_USER: admin
+       POSTGRES_DB: node_training
+    ports:
+      - '5432:5432'
