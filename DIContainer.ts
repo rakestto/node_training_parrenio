@@ -1,11 +1,10 @@
 import { asClass, asValue, createContainer } from 'awilix';
 import TypeORMDatabase from './src/API/Database';
-import GetUserController from './src/API/Express/Controllers/User/GetUser.controller';
+import GetUserController from './src/API/Express/Controllers/user.controller';
 import ApiRouter from './src/API/Express/Routes';
 import UserRouter from './src/API/Express/Routes/User/User.route';
 import { Server } from './src/API/Express/Server';
-import GetUserUseCase from './src/Context/User/Application/UseCases/getUser';
-import UserPostgresSQLRepository from './src/Context/User/Infra/Repositories/UserPostgresRepository';
+import UserUseCases from './src/Context/User/Application/Services/user.service';
 import currentEnvironment from './src/environments/index'
 
 const container = createContainer({
@@ -29,11 +28,11 @@ container.register({
 });
 
 container.register({
-	getUserUseCase: asClass(GetUserUseCase),
+	userUseCases: asClass(UserUseCases),
 });
 
 container.register({
-	userRepository: asClass(UserPostgresSQLRepository).singleton(),
+	// userRepository: asClass(UserPostgresSQLRepository).singleton(),
 });
 
 //console log for view current registrations in console.

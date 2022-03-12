@@ -1,5 +1,3 @@
-import { User } from '../Infra/Repositories/UserPostgresRepository';
-
-export interface IUserRepository {
-  getUserByName(name: string): Promise<User[]>;
+export interface IRepository<Entity> {
+  findById(id: string): Promise<Entity | undefined>;
 }
