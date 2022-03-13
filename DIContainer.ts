@@ -1,41 +1,47 @@
-import { asClass, asValue, createContainer } from 'awilix';
-import TypeORMDatabase from './src/API/Database';
-import GetUserController from './src/API/Express/Controllers/user.controller';
+import { asClass, asValue, AwilixContainer, createContainer } from 'awilix';
+import UserController from './src/API/Express/Controllers/user.controller';
 import ApiRouter from './src/API/Express/Routes';
 import UserRouter from './src/API/Express/Routes/User/User.route';
 import { Server } from './src/API/Express/Server';
-import UserUseCases from './src/Context/User/Application/Services/user.service';
-import currentEnvironment from './src/environments/index'
+import UserService from './src/Context/User/Application/Services/user.service';
+import UserTyperORMRepository from './src/Context/User/Infra/Repositories/UserTypeORMRepository/userTypeORMRepository';
+import { Connection } from 'typeorm';
 
-const container = createContainer({
-	injectionMode: 'CLASSIC',
-});
 
-container.register({
-	config: asValue(currentEnvironment),
-	database: asClass(TypeORMDatabase).singleton(),
-	router: asClass(ApiRouter).singleton(),
-	server: asClass(Server).singleton(),
-	port: asValue('4000'),
-});
+const initContainer = async (databaseConection: Connection): Promise<AwilixContainer> => { 
+	const container = createContainer({
+		injectionMode: 'CLASSIC',
+	});
 
-container.register({
-	userRouter: asClass(UserRouter).singleton().singleton(),
-});
+	container.register({
+		router: asClass(ApiRouter).singleton(),
+		server: asClass(Server).singleton(),
+		port: asValue('4000'),
+	});
 
-container.register({
-	getUserController: asClass(GetUserController).singleton(),
-});
+	container.register({
+		userRouter: asClass(UserRouter).singleton().singleton(),
+	});
 
-container.register({
-	userUseCases: asClass(UserUseCases),
-});
+	container.register({
+		userController: asClass(UserController).singleton(),
+	});
 
-container.register({
-	// userRepository: asClass(UserPostgresSQLRepository).singleton(),
-});
+	container.register({
+		userService: asClass(UserService).singleton(),
+	});
 
-//console log for view current registrations in console.
-console.log(container.registrations);
+	if (databaseConection){
+		container.register({
+			userRepository: asClass(UserTyperORMRepository).singleton(),
+		});
+	}
 
-export default container;
+	//console log for view current registrations in console.
+	console.log(container.registrations);
+
+	return container
+
+}
+
+export default initContainer;

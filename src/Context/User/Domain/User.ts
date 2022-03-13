@@ -8,7 +8,6 @@ export interface User {
   country: string,
   password: string,
   candidacies: Candidacy[],
-  wonklas: string
 }
 
 export enum AvailabilityUser{

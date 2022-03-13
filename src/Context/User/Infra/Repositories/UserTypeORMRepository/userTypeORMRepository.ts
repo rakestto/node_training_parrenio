@@ -6,11 +6,16 @@ import { IRepository } from '../../../Domain/IUserRepository';
 export default class UserTyperORMRepository implements IRepository<User> { 
 	private userRepository: Repository<User>
 	constructor() {
-		this.userRepository = getRepository(UserEntity)
+		this.userRepository = this.createRepository()
+	}
+
+	createRepository() {
+		const userRepository = getRepository(UserEntity)
+		return userRepository
 	}
 
 	async findById(id: string): Promise<User | undefined> {
-		const user = this.userRepository.findOne(id)
+		const user = await this.userRepository.findOne(id)
 		return user
 	}
 }

@@ -8,9 +8,9 @@ export default class UserController  {
 		this.userService = userService;
 	}
 
-	findById(req: Request, res: Response) {
+	async findById(req: Request, res: Response) {
 		const user_id:string = req.params.user_id
-		const result = this.userService.findById(user_id)
+		const result = await this.userService.findById(user_id)
 		res.send(result)
 	}
 
