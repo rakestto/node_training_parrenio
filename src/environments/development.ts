@@ -14,8 +14,12 @@ export const DEVELOPMENT: typeORMConnectionOptions = {
 		port: 5432,
 		username: 'admin',
 		password: 'admin',
-		database: 'node_training',
+		database: 'dev_training',
 		entities: ['./src/Context/**/Infra/DomainEntities/TypeORMEntities/**/*.entity.ts'],
-		synchronize: true
+		synchronize: true,
+		migrations: ['./src/API/Database/migrations/*.migration.ts'],
+		cli: {
+			migrationsDir: '../API/Database/migrations'
+		}
 	}
 }

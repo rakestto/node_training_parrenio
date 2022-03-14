@@ -7,6 +7,6 @@ services:
     environment:
        POSTGRES_PASSWORD: admin
        POSTGRES_USER: admin
-       POSTGRES_DB: node_training
+       POSTGRES_DB: dev_training
     ports:
       - '5432:5432'

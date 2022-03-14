@@ -1,0 +1,13 @@
+{
+    "host": "localhost",
+    "port": 5432,
+    "username": "admin",
+    "password": "admin",
+    "database": "dev_training",
+    "type": "postgres",
+    "entities": ["./src/Context/**/Infra/DomainEntities/TypeORMEntities/**/*.entity.ts" ],
+    "migrations": ["./src/API/Database/migrations"],
+    "cli": {
+        "migrationsDir": "./src/API/Database/migrations"
+    }
+}
